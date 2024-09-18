@@ -50,7 +50,5 @@ export default class Project{
             const taskDate = new Date(task.getDateFormatted());
             return isThisWeek(toDate(taskDate));
         })
-
-
     }
 }
