@@ -1,0 +1,145 @@
+
+*, *::after, *::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    min-height: 100vh;
+} 
+/* Page Layout */
+.container{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    
+}
+
+/* Header */
+.header{
+    display: flex;
+    align-items: center;
+    background-color: grey;
+    color: white;
+    padding:25px;
+    gap: 1rem;
+    grid-column: 1/3;
+    grid-row: 1/2;
+}
+.header img{
+    height: 2rem;
+}
+#title{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+}
+
+/* Sidebar */
+.sidebar{
+    display: flex; 
+    flex-direction: column;
+    border: 1px solid rgb(195, 187, 187);
+    float: left;
+    /* width: 500px; */
+    grid-column: 1/2;
+    grid-row: 2/3;
+    padding: 20px;
+    gap: 30px;
+}
+
+/* Tasks */
+.tasks{
+    background-color: rgb(180, 180, 180);;
+    height: 100vh;
+}
+
+.main{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    background-color: rgb(145, 145, 145);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.projects{
+    display: flex;
+    flex-direction: column;
+}
+.projects h2{
+    margin: 10px;
+}
+
+.tasks{
+    margin: 0 auto;
+    padding: 20px 40px;
+    width: 900px;
+}
+
+.tasks h2{
+    margin: 10px;
+}
+
+/* Footer */
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    grid-column: 1/3;
+    padding: 20px;
+}
+
+/* Button */
+
+button{
+    border: none;
+    text-align: left;
+    /* border: none; */
+    border: 1px solid black;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+
+}
+
+
+.dft-proj-list{
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.add-tsk-btn{
+    width: 100%;
+}
+
+
+
+
+/* Form */
+
+/* 
+.task-form {
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-form input,
+.task-form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.task-form button {
+    display: block;
+    margin: 0 auto;
+} */
