@@ -51,6 +51,9 @@ body{
 .tasks{
     background-color: rgb(180, 180, 180);;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .main{
@@ -143,3 +146,182 @@ button{
     display: block;
     margin: 0 auto;
 } */
+
+
+.proj-form{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-top: 5px;
+    background-color: grey;
+    gap: 3px;
+}
+
+.proj-form.hide-form{
+    display: none;
+
+}
+
+
+#submitProjBtn{
+    background-color: rgb(162, 222, 134);
+    border: none;
+    text-align: center;
+    width: 50%;
+   
+}
+
+#projCancelBtn{
+    background-color: rgb(212, 99, 99);
+    border: none;
+    text-align: center;
+    width: 50%;
+}
+
+#project-name{
+    padding:10px ;
+}
+
+
+
+
+.add-prj-btn{
+    width: 100%;
+}
+
+
+.prj-btn{
+    width: 100%;
+}
+
+
+#projects-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Tasks */
+
+.task-form{
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid white;
+    gap: 5px;
+}
+
+.task-form.hide-form{
+    display: none;
+}
+
+#task-desc{
+    resize: none;
+}
+
+#task-desc, #task-due,#task-name{
+    border: none;
+    padding: 5px;
+    background-color: #f8f8f8;
+}
+
+
+#bottom-task-form{
+    display: flex;
+    justify-content: space-between; /* Pushes date left, buttons right */
+    align-items: center;
+    width: 100%;
+   
+}
+
+#task-due {
+    flex-grow: 1;
+    margin-right: 65%;
+}
+#taskFormBtns{
+    display: flex;
+    gap: 10px;
+}
+#submitTaskBtn{
+    background-color: rgb(162, 222, 134);
+    border: none;
+    text-align: center;
+    width: 50%;
+    padding: 10px 18px;
+}
+
+#taskCancelBtn{
+    background-color: rgb(212, 99, 99);
+    border: none;
+    text-align: center;
+    width: 50%;
+    padding: 10px 18px;
+}
+button {
+    cursor: pointer;
+}
+
+.hide-form{
+    display: none;
+}
+
+
+.tasks-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Task Form */
+
+
+
+.task{
+    max-height: 200px;
+    background-color: white;
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 40px 2fr;
+    padding: 10px;
+
+}
+
+.task-name{
+    max-height: 50px;
+    grid-row: 1/2;
+    grid-column: 2/3;
+    font-size: 20px;
+}
+
+.del-task{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+.task-date{
+    max-height: 50px; /* Set a fixed maximum height */
+    display: flex;
+    align-items: end;
+    grid-column: 2/3;
+    grid-row: 3/4;
+}
+
+
+.task-desc{
+    max-height: 300px; /* Set a fixed maximum height */
+    grid-row: 2/3;
+    grid-column: 2/3;
+}
+
+.task-desc{
+    max-height: 100px; /* Set a fixed maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 5px;
+    border: 1px solid #ccc; /* Optional: for visual clarity */
+    background-color: #f9f9f9; /* Optional: for better UI */
+    word-wrap: break-word; /* Ensures text wraps properly */
+}
