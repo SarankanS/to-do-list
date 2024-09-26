@@ -10,16 +10,16 @@ export default function createSidebar() {
     addTaskButton.innerHTML = '+ Add Task';
 
     const inboxButton = document.createElement('button');
-    inboxButton.classList.add('dft-prj-btn');
+    inboxButton.classList.add('inbox-btn');
     inboxButton.textContent = 'Inbox';
 
     const todayButton = document.createElement('button');
-    todayButton.classList.add('dft-prj-btn');
+    todayButton.classList.add('today-btn');
     todayButton.textContent = 'Today';
 
     const upcomingButton = document.createElement('button');
-    upcomingButton.classList.add('dft-prj-btn');
-    upcomingButton.textContent = 'Upcoming';
+    upcomingButton.classList.add('week-btn');
+    upcomingButton.textContent = 'Weekly';
 
     defaultProjs.appendChild(addTaskButton);
     defaultProjs.appendChild(inboxButton);
@@ -35,14 +35,50 @@ export default function createSidebar() {
 
     const addProjectButton = document.createElement('button');
     addProjectButton.classList.add('add-prj-btn');
-    addProjectButton.innerHTML = '+ Add Project';
+    addProjectButton.textContent = '+ Add Project';
 
     const projectsContainer = document.createElement('div');  
     projectsContainer.setAttribute('id', 'projects-container');
 
+    
+    const form = document.createElement('form');
+    form.classList.add('proj-form');
+    form.classList.add('hide-form');
+
+    const projNameLabel = document.createElement('label');
+    projNameLabel.setAttribute('for', 'project-name');  
+    // projNameLabel.textContent = "Project Name:";
+
+    const projNameInput = document.createElement('input');
+    projNameInput.setAttribute('type', 'text');
+    projNameInput.setAttribute('name', 'project-name');
+    projNameInput.setAttribute('id', 'project-name');  
+    projNameInput.setAttribute('placeholder', "Project Name");
+    projNameInput.required = true;
+
+    const projFormButtons = document.createElement("div");
+    projFormButtons.setAttribute("id", "prjFormBtns");
+
+    const submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Add';
+    submitButton.setAttribute("id", "submitProjBtn");
+
+    const cancelButton = document.createElement('button');
+    cancelButton.setAttribute("id", "projCancelBtn");
+    cancelButton.textContent = "Cancel";
+
+    projFormButtons.appendChild(submitButton);
+    projFormButtons.appendChild(cancelButton);
+
+    form.appendChild(projNameLabel);
+    form.appendChild(projNameInput);
+    form.appendChild(projFormButtons) ;
+    
     projectsDiv.appendChild(projectsHeading);
-    projectsDiv.appendChild(addProjectButton);
     projectsDiv.appendChild(projectsContainer);  
+    projectsContainer.appendChild(addProjectButton);
+    projectsContainer.appendChild(form);
 
     sidebar.appendChild(defaultProjs);
     sidebar.appendChild(projectsDiv);
