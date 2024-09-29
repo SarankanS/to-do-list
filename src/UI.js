@@ -128,6 +128,8 @@ export default class UI {
         this.toDoList.getProject(this.currentProjectName).deleteTask(task.getName());
         const taskDiv = document.querySelector(`[data-task-name="${task.getName()}"]`);
         taskDiv.remove();
+        Storage.saveToDoList(this.toDoList);
+
     }
 
     editTask(task) {
@@ -252,16 +254,43 @@ export default class UI {
         form.classList.toggle("hide-form");
     }
 
+    // addProjectBox(name){
+    //     const projectList = document.querySelector("#projects-container");
+    //     const projectBox = document.createElement("button");
+    //     const addProjectButton = projectList.querySelector('.add-prj-btn');
+    //     projectBox.setAttribute("id", `${name}-box`);
+    //     projectBox.classList.add("prj-btn");
+
+    //     projectBox.textContent = name;
+    //     addProjectButton.insertAdjacentElement('beforebegin', projectBox);
+    //     projectBox.addEventListener("click", () => this.openProject(name));
+
+    // }
     addProjectBox(name){
         const projectList = document.querySelector("#projects-container");
+        const projBoxContainer = document.createElement("div");
+        projBoxContainer.classList.add("proj-box-container");
+        projBoxContainer.setAttribute("id", `${name}-box`);
+
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('del-proj');
+        deleteButton.textContent = "X";
+
+
         const projectBox = document.createElement("button");
         const addProjectButton = projectList.querySelector('.add-prj-btn');
-        projectBox.setAttribute("id", `${name}-box`);
+        // projectBox.setAttribute("id", `${name}-box`);
         projectBox.classList.add("prj-btn");
-
         projectBox.textContent = name;
-        addProjectButton.insertAdjacentElement('beforebegin', projectBox);
+
+        projBoxContainer.appendChild(projectBox);
+        projBoxContainer.appendChild(deleteButton);
+
+        addProjectButton.insertAdjacentElement('beforebegin', projBoxContainer);
         projectBox.addEventListener("click", () => this.openProject(name));
+        deleteButton.addEventListener("click", () => this.removeProject(name));
 
     }
 
@@ -283,6 +312,15 @@ export default class UI {
             addTaskButton.style.display = 'inline-block'; 
         }
     }
+
+    removeProject(name){
+        this.toDoList.deleteProject(name);
+        const projectDiv = document.querySelector(`#${name}-box`);
+        projectDiv.remove();
+        Storage.saveToDoList(this.toDoList); 
+
+    }
+    
 
     renderTasks(tasks) {
         const taskContainer = document.querySelector(".tasks-list"); 
