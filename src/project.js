@@ -35,19 +35,20 @@ export default class Project{
     }
 
     deleteTask(taskName){
-        this.task.filter((task) => task.getName() != taskName);
+        this.tasks = this.tasks.filter((task) => task.getName() != taskName);
     }
 
     getTasksToday(){
         return this.tasks.filter((task)=>{
-            const taskDate = new Date(task.getDateFormatted());
+            const taskDate = new Date(task.getFormattedDate());
             return isToday(toDate(taskDate));
         })
     }
 
     getWeeklyTasks(){
-        return this.tasks.filter((tasks)=>{
-            const taskDate = new Date(task.getDateFormatted());
+        return this.tasks.filter((task)=>{
+            const taskDate = new Date(task.getFormattedDate());
+            console.log( isThisWeek(toDate(taskDate)));
             return isThisWeek(toDate(taskDate));
         })
     }
