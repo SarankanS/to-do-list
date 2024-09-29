@@ -357,3 +357,17 @@ button {
     padding: 10px 20px;
     cursor: pointer;
 }
+
+
+.proj-box-container{
+    display: flex;
+}
+
+.del-proj{
+    border-left: none;   
+    background: red;
+}
+
+.prj-btn{
+    border-right: none;
+}
