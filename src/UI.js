@@ -17,7 +17,6 @@ export default class UI {
         });
     }
 
-    // Tasks
 
     createTask(e){
         e.preventDefault();
@@ -208,8 +207,6 @@ export default class UI {
         
     }
     
-
-
     // Project
 
     createProject(e) {
@@ -296,7 +293,6 @@ export default class UI {
 
     }
 
-    //TODAY
     updateTodayTasks(){
         const projects = this.toDoList.getProjects();
         projects.forEach((project) => {
@@ -324,15 +320,12 @@ export default class UI {
         })
     }
 
-    //Render Projects
     renderProjects() {
-        const projects = this.toDoList.getProjects(); // Get projects from the toDoList
-    
-        // Clear existing project boxes
+        const projects = this.toDoList.getProjects(); 
+        
         const projectList = document.querySelector("#projects-container");
         projectList.querySelectorAll('.prj-btn').forEach(button => button.remove());
     
-        // Iterate over projects and add them to the UI
         projects.forEach(project => {
             if (project.getName() == 'Today' || project.getName()=='Week' || project.getName()=='Inbox'){ return;}
             this.addProjectBox(project.getName());
