@@ -1,13 +1,15 @@
 import Project from "./project";
-import ToDoList from "./todolist";
 import Task from "./task";
+import Storage from './storage';
 
 export default class UI {
-    constructor(todoList) {
-        this.toDoList = todoList; 
+    constructor() {
+        // this.toDoList = todoList; 
         this.currentProjectName = 'Inbox';
         //TODO find a better way
         window.addEventListener('DOMContentLoaded', () => {
+            this.toDoList =Storage.getToDoList();
+            this.renderProjects();
             const inboxButton = document.querySelector('.inbox-btn'); 
             if (inboxButton) {
                 inboxButton.click(); 
@@ -37,6 +39,8 @@ export default class UI {
         this.addTaskBox(task); 
         this.updateTodayTasks();
         this.updateWeeklyTasks();
+        Storage.saveToDoList(this.toDoList);
+        
     }
 
 
@@ -162,7 +166,7 @@ export default class UI {
             task.setDueDate(taskDate);
     
             this.updateTaskUI(task);
-    
+            Storage.saveToDoList(this.toDoList);
             fullscreen.remove();
         });
     
@@ -220,6 +224,7 @@ export default class UI {
         form.reset();
 
         this.addProjectBox(project.getName());
+        Storage.saveToDoList(this.toDoList);
     }
 
     addProjectBtns() {
@@ -299,6 +304,7 @@ export default class UI {
             let todayTasks = project.getTasksToday();
             todayTasks.forEach((task)=>{
                 this.toDoList.getProject("Today").addTask(task);
+                Storage.saveToDoList(this.toDoList);
 
             })
             
@@ -311,11 +317,28 @@ export default class UI {
             let weeklyTasks = project.getWeeklyTasks();
             weeklyTasks.forEach((task)=>{
                 this.toDoList.getProject("Week").addTask(task);
+                Storage.saveToDoList(this.toDoList);
 
             })
             
         })
     }
+
+    //Render Projects
+    renderProjects() {
+        const projects = this.toDoList.getProjects(); // Get projects from the toDoList
+    
+        // Clear existing project boxes
+        const projectList = document.querySelector("#projects-container");
+        projectList.querySelectorAll('.prj-btn').forEach(button => button.remove());
+    
+        // Iterate over projects and add them to the UI
+        projects.forEach(project => {
+            if (project.getName() == 'Today' || project.getName()=='Week' || project.getName()=='Inbox'){ return;}
+            this.addProjectBox(project.getName());
+        });
+    }
+    
 
 }
 
