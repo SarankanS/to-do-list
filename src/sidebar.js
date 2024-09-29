@@ -5,9 +5,10 @@ export default function createSidebar() {
     const defaultProjs = document.createElement("div");
     defaultProjs.classList.add("dft-proj-list");
 
-    const addTaskButton = document.createElement('button');
-    addTaskButton.classList.add('dft-prj-btn');
-    addTaskButton.innerHTML = '+ Add Task';
+    //TODO: Add back later, when genearl add task functionality created
+    // const addTaskButton = document.createElement('button');
+    // addTaskButton.classList.add('general-add-task');
+    // addTaskButton.innerHTML = '+ Add Task';
 
     const inboxButton = document.createElement('button');
     inboxButton.classList.add('inbox-btn');
@@ -20,8 +21,9 @@ export default function createSidebar() {
     const upcomingButton = document.createElement('button');
     upcomingButton.classList.add('week-btn');
     upcomingButton.textContent = 'Weekly';
-
-    defaultProjs.appendChild(addTaskButton);
+    
+    //TODO: Add back later, when genearl add task functionality created
+    // defaultProjs.appendChild(addTaskButton);
     defaultProjs.appendChild(inboxButton);
     defaultProjs.appendChild(todayButton);
     defaultProjs.appendChild(upcomingButton);
@@ -47,7 +49,6 @@ export default function createSidebar() {
 
     const projNameLabel = document.createElement('label');
     projNameLabel.setAttribute('for', 'project-name');  
-    // projNameLabel.textContent = "Project Name:";
 
     const projNameInput = document.createElement('input');
     projNameInput.setAttribute('type', 'text');
