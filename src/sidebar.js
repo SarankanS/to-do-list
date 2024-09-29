@@ -22,7 +22,7 @@ export default function createSidebar() {
     upcomingButton.classList.add('week-btn');
     upcomingButton.textContent = 'Weekly';
     
-    //TODO: Add back later, when genearl add task functionality created
+    //TODO: Add back later, when genearl add task functionality created 
     // defaultProjs.appendChild(addTaskButton);
     defaultProjs.appendChild(inboxButton);
     defaultProjs.appendChild(todayButton);
