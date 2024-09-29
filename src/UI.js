@@ -35,6 +35,8 @@ export default class UI {
         form.reset();
 
         this.addTaskBox(task); 
+        this.updateTodayTasks();
+        this.updateWeeklyTasks();
     }
 
 
@@ -64,16 +66,24 @@ export default class UI {
     
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task');
-    
+        taskDiv.setAttribute('data-task-name', task.getName()); 
+
         
+
         const deleteContainer = document.createElement('div');
         deleteContainer.classList.add("complete-task");
         const deleteButton = document.createElement('button');
         deleteButton.type = 'button';
         deleteButton.classList.add('del-task');
         deleteContainer.appendChild(deleteButton);
+
+        deleteButton.addEventListener("click", ()=>{
+             this.removeTaskBox(task);
+        })
     
-        
+        taskDiv.addEventListener("dblclick", ()=>{this.editTask(task)})
+
+
         const taskNameDiv = document.createElement('div');
         taskNameDiv.classList.add('task-name');
         taskNameDiv.textContent = task.name; 
@@ -111,6 +121,91 @@ export default class UI {
         addTaskButton.insertAdjacentElement('beforebegin', taskDiv);
     }
 
+    removeTaskBox(task){
+        this.toDoList.getProject(this.currentProjectName).deleteTask(task.getName());
+        const taskDiv = document.querySelector(`[data-task-name="${task.getName()}"]`);
+        taskDiv.remove();
+    }
+
+    editTask(task) {
+        const fullscreen = document.createElement('div');
+        fullscreen.setAttribute("id", "fullscreen-task-modal");
+        fullscreen.classList.add('fullscreen-modal');
+    
+        const taskNameLabel = document.createElement('label');
+        taskNameLabel.textContent = "Task Name:";
+        const taskNameInput = document.createElement('input');
+        taskNameInput.type = 'text';
+        taskNameInput.value = task.getName();
+    
+        const taskDescLabel = document.createElement('label');
+        taskDescLabel.textContent = "Task Description:";
+        const taskDescInput = document.createElement('textarea');
+        taskDescInput.value = task.getDescription();
+    
+        const taskDateLabel = document.createElement('label');
+        taskDateLabel.textContent = "Due Date:";
+        const taskDateInput = document.createElement('input');
+        taskDateInput.type = 'date';
+        taskDateInput.value = task.getDueDate();
+    
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.classList.add('save-btn');
+        saveButton.addEventListener('click', () => {
+            const taskDiv = document.querySelector(`[data-task-name="${task.getName()}"]`);
+            task.setName(taskNameInput.value);
+            taskDiv.setAttribute('data-task-name', task.getName()); 
+
+            task.setDescription(taskDescInput.value);
+            const taskDate = taskDateInput.value ? taskDateInput.value : 'no due date';
+            task.setDueDate(taskDate);
+    
+            this.updateTaskUI(task);
+    
+            fullscreen.remove();
+        });
+    
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.classList.add('cancel-btn');
+        cancelButton.addEventListener('click', () => {
+            fullscreen.remove();
+        });
+    
+        fullscreen.appendChild(taskNameLabel);
+        fullscreen.appendChild(taskNameInput);
+        fullscreen.appendChild(taskDescLabel);
+        fullscreen.appendChild(taskDescInput);
+        fullscreen.appendChild(taskDateLabel);
+        fullscreen.appendChild(taskDateInput);
+        fullscreen.appendChild(saveButton);
+        fullscreen.appendChild(cancelButton);
+    
+        document.body.appendChild(fullscreen);
+    }
+    
+    
+    updateTaskUI(task) {
+        const taskDiv = document.querySelector(`[data-task-name="${task.getName()}"]`);
+        if (taskDiv) {
+            const taskNameDiv = taskDiv.querySelector('.task-name');
+            const taskDescDiv = taskDiv.querySelector('.task-desc');
+            const taskDateDiv = taskDiv.querySelector('.task-date');
+    
+            
+            taskNameDiv.textContent = task.getName();
+            taskDescDiv.textContent = task.getDescription();
+            taskDateDiv.textContent = task.getDueDate();
+    
+            
+            taskDiv.setAttribute('data-task-name', task.getName());
+        }
+        
+    }
+    
+
+
     // Project
 
     createProject(e) {
@@ -131,9 +226,9 @@ export default class UI {
         const form = document.querySelector(".proj-form");
         const addPrjPopupBtn = document.querySelector(".add-prj-btn");
         
-        const inboxButton = document.querySelector('.inbox-btn'); // Assuming you have a class for the Inbox button
-        const todayButton = document.querySelector('.today-btn'); // Same for Today
-        const upcomingButton = document.querySelector('.week-btn'); // Same for Upcoming
+        const inboxButton = document.querySelector('.inbox-btn');
+        const todayButton = document.querySelector('.today-btn');
+        const upcomingButton = document.querySelector('.week-btn');
         
         const cancelButton = document.querySelector('#projCancelBtn');
 
@@ -142,7 +237,7 @@ export default class UI {
         
         inboxButton.addEventListener('click', () => this.openProject('Inbox'));
         todayButton.addEventListener('click', () => this.openProject('Today'));
-        upcomingButton.addEventListener('click', () => this.openProject('Week')); // Change from 'Upcoming' to 'Week'
+        upcomingButton.addEventListener('click', () => this.openProject('Week')); 
         cancelButton.addEventListener("click", (e) =>{
             e.preventDefault();
             form.reset();
@@ -178,6 +273,13 @@ export default class UI {
 
         this.currentProjectName = name; 
         this.renderTasks(tasks);
+
+        const addTaskButton = document.querySelector(".add-tsk-btn");
+        if (name === "Today" || name === "Week") {
+            addTaskButton.style.display = 'none'; 
+        } else {
+            addTaskButton.style.display = 'inline-block'; 
+        }
     }
 
     renderTasks(tasks) {
@@ -188,6 +290,33 @@ export default class UI {
         });
 
     }
+
+    //TODAY
+    updateTodayTasks(){
+        const projects = this.toDoList.getProjects();
+        projects.forEach((project) => {
+            if (project.getName()== 'Today' || project.getName()=='Week'){ return;}
+            let todayTasks = project.getTasksToday();
+            todayTasks.forEach((task)=>{
+                this.toDoList.getProject("Today").addTask(task);
+
+            })
+            
+        })
+    }
+    updateWeeklyTasks(){
+        const projects = this.toDoList.getProjects();
+        projects.forEach((project) => {
+            if (project.getName()== 'Today' || project.getName()=='Week'){ return;}
+            let weeklyTasks = project.getWeeklyTasks();
+            weeklyTasks.forEach((task)=>{
+                this.toDoList.getProject("Week").addTask(task);
+
+            })
+            
+        })
+    }
+
 }
 
 
