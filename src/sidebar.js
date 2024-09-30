@@ -12,15 +12,20 @@ export default function createSidebar() {
 
     const inboxButton = document.createElement('button');
     inboxButton.classList.add('inbox-btn');
+    inboxButton.classList.add('dft-prj-btn');
     inboxButton.textContent = 'Inbox';
 
     const todayButton = document.createElement('button');
     todayButton.classList.add('today-btn');
+    todayButton.classList.add('dft-prj-btn');
+
     todayButton.textContent = 'Today';
 
     const upcomingButton = document.createElement('button');
     upcomingButton.classList.add('week-btn');
     upcomingButton.textContent = 'Weekly';
+    upcomingButton.classList.add('dft-prj-btn');
+
     
     //TODO: Add back later, when genearl add task functionality created 
     // defaultProjs.appendChild(addTaskButton);
